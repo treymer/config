@@ -2,7 +2,7 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-        . /etc/bashrc
+	. /etc/bashrc
 fi
 
 # User specific environment
@@ -13,4 +13,9 @@ export PATH
 # export SYSTEMD_PAGER=
 
 # User specific aliases and functions
-PS1="\@ \e[0;35m[\u@\h \w]\$\e[m "
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+PS1="\@ \u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
